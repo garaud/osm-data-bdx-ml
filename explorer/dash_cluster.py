@@ -22,6 +22,7 @@ print("read files")
 centroid, cluster = read_cluster()
 pcafeatures, pcaind = read_pca()
 user = osm_user(cluster)
+n_display_features = 8
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -70,7 +71,7 @@ def update_cluster_graph(dropdown_value):
     first, second = dropdown_value.split(",")
     rayon = rayon_estimation(cluster, first, second)
     data = cluster_scatter(cluster, first, second)
-    data += pca_arrow(pcafeatures, first, second, rayon, k=6)
+    data += pca_arrow(pcafeatures, first, second, rayon, k=n_display_features)
     return {
         'data': data,
         'layout': go.Layout(
@@ -89,7 +90,7 @@ def update_cluster_graph(dropdown_value):
               [Input('pca-dropdown', 'value')])
 def update_barplot(dropdown_value):
     first, second = dropdown_value.split(",")
-    names = pca_highest_features(pcafeatures, first, second, k=6)
+    names = pca_highest_features(pcafeatures, first, second, k=n_display_features)
     data = user_feature_bar(user, names)
     return {
         'data': data
