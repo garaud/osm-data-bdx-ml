@@ -93,7 +93,12 @@ def update_barplot(dropdown_value):
     names = pca_highest_features(pcafeatures, first, second, k=n_display_features)
     data = user_feature_bar(user, names)
     return {
-        'data': data
+        'data': data,
+        'layout': go.Layout(
+            xaxis={'title': "features"},
+            yaxis={'title': "%"},
+            hovermode='closest'
+        )
         }
 
 
