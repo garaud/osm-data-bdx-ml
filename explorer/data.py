@@ -93,13 +93,13 @@ def pca_arrow(pca_features, first=1, second=2, rayon=1, k=5):
         r = x**2 + y**2
         x = math.sqrt(rayon**2 / r) * x
         y = math.sqrt(rayon**2 / r) * y
-        print("name : {} / {}, {}".format(name, x, y))
         result.append(
             go.Scatter(
                 x=[0, x],
                 y=[0, y],
-                mode="lines+markers+text",
-                text=name,
+                mode="lines + markers + text",
+                text=['', name],
+                textposition='top center',
                 name=name,
                 # marker=dict(symbol=9, size=12)
                 marker=dict(symbol=24, size=7, color="#666666")
