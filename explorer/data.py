@@ -68,8 +68,6 @@ def rayon_estimation(cluster, first, second):
 
 
 def pca_arrow(pca_features, first="PC1", second="PC2", rayon=1, k=5):
-    """XXX régler la couleur et la taille
-    """
     names = pca_highest_features(pca_features, first, second, k)
     result = [ ]
     for name in names:
@@ -92,9 +90,6 @@ def pca_arrow(pca_features, first="PC1", second="PC2", rayon=1, k=5):
     return result
 
 
-# def composante_pca_par_features(pca_features, feature_names):
-    # return pca_features.loc[feature_names]
-
-
 if __name__ == '__main__':
-    f, ind = read_pca()
+    centroid, cluster = read_cluster()
+    pcafeatures, pcaind = read_pca()
