@@ -26,18 +26,12 @@ def read_cluster():
     return centroid, cluster
 
 
-def pca_highest_features(pca_features, x, y, k):
+def pca_highest_features(pca_features, first, second, k):
     """Prend les 5 features de PCx, PCy les plus importantes
     """
-    assert x > 0
-    assert y > 0
-    if not isinstance(x, int) or not isinstance(y, int):
-        raise ValueError("x et y doivent être entier")
-    x = "PC{}".format(x)
-    y = "PC{}".format(y)
-    df = pca_features[[x, y]]
+    df = pca_features[[first, second]]
     # on calcule la norm 2
-    norm = df[x]**2 + df[y] ** 2
+    norm = df[first]**2 + df[second] ** 2
     norm = norm.sort_values(ascending=False)
     return norm.iloc[:k].index.tolist()
 
@@ -50,10 +44,6 @@ def cluster_scatter(data, first, second):
     second : second component
 e
     """
-    if not isinstance(first, int) or not isinstance(second, int):
-        raise ValueError("first et second doivent être entier")
-    first = "PC{}".format(first)
-    second = "PC{}".format(second)
     cluster_id = data["Xclust"].unique().tolist()
     cluster_id.sort()
     return [
@@ -72,22 +62,16 @@ e
 
 
 def rayon_estimation(cluster, first, second):
-    if not isinstance(first, int) or not isinstance(second, int):
-        raise ValueError("first et second doivent être entier")
-    first = "PC{}".format(first)
-    second = "PC{}".format(second)
     stats = np.sqrt(cluster[first]**2 + cluster[second]**2).describe()
     return stats['75%']
     # return np.sqrt(cluster[first]**2 + cluster[second]**2).mean()
 
 
-def pca_arrow(pca_features, first=1, second=2, rayon=1, k=5):
+def pca_arrow(pca_features, first="PC1", second="PC2", rayon=1, k=5):
     """XXX régler la couleur et la taille
     """
     names = pca_highest_features(pca_features, first, second, k)
     result = [ ]
-    first = "PC{x}".format(x=first)
-    second = "PC{y}".format(y=second)
     for name in names:
         x, y = pca_features.loc[name, [first, second]].tolist()
         r = x**2 + y**2
