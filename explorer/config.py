@@ -10,3 +10,4 @@ OSM_USER_FILE = DATADIR / 'user-metadata-extra.csv'
 # luigi process automatically select 5 groups for the cluster
 CLUSTER_FILE = DATADIR / "user-metadata-pca-auto-clusters-5-kmeans.h5"
 PCA_FILE = DATADIR / 'user-metadata-auto-n_components-min-3-max-12-pca.h5'
+GEO_FILE = DATADIR / 'geo-building.json'
