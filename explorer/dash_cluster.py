@@ -15,18 +15,20 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 
-from data import read_pca, read_cluster, cluster_scatter, pca_arrow, rayon_estimation
+from data import (read_pca, read_cluster, osm_user, cluster_scatter, pca_arrow,
+                  pca_highest_features, rayon_estimation, user_feature_bar)
 
 print("read files")
 centroid, cluster = read_cluster()
 pcafeatures, pcaind = read_pca()
+user = osm_user(cluster)
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 dcc._js_dist[0]['external_url'] = 'https://cdn.plot.ly/plotly-basic-latest.min.js'
 
-app.layout = html.Div([
+cluster_dom = html.Div([
     html.H2("Cluster / PCA"),
     dcc.Dropdown(
         id='pca-dropdown',
@@ -42,7 +44,23 @@ app.layout = html.Div([
     ),
     dcc.Graph(
         id='cluster-pca'
+    ),
+],
+style={'width': '49%', 'display': 'inline-block'}
+)
+
+barplot_feature_dom = html.Div([
+    html.H2("Feature stats by cluster"),
+    dcc.Graph(
+        id="stats-feature",
     )
+],
+style={'width': '49%', 'display': 'inline-block'}
+)
+
+app.layout = html.Div([
+    cluster_dom,
+    barplot_feature_dom
 ])
 
 
@@ -66,6 +84,16 @@ def update_cluster_graph(dropdown_value):
                     hovermode='closest'
         )
     }
+
+@app.callback(Output('stats-feature', 'figure'),
+              [Input('pca-dropdown', 'value')])
+def update_barplot(dropdown_value):
+    first, second = dropdown_value.split(",")
+    names = pca_highest_features(pcafeatures, first, second, k=6)
+    data = user_feature_bar(user, names)
+    return {
+        'data': data
+        }
 
 
 if __name__ == '__main__':
