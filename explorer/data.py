@@ -9,7 +9,7 @@ import pandas as pd
 
 import plotly.graph_objs as go
 
-from config import CLUSTER_FILE, PCA_FILE
+from explorer.config import CLUSTER_FILE, PCA_FILE
 
 
 def read_pca():
@@ -50,7 +50,7 @@ e
         go.Scatter(
             x=data.query("Xclust == @idc")[first],
             y=data.query("Xclust == @idc")[second],
-            text=f"cluster: {idc}",
+            text="cluster: "+str(idc),
             mode="markers",
             opacity = 0.7,
             marker={
