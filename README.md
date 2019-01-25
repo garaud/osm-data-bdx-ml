@@ -5,6 +5,8 @@ Code, data et notebooks.
 Bordeaux Machine Learning Meetup
 https://www.meetup.com/Bordeaux-Machine-Learning-Meetup/events/257919300/
 
+Présentation faite en markdow & revealjs dans le dossier [presentation](./presentation).
+
 ## how to : 
 
 `
