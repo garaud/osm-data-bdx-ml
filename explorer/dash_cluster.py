@@ -22,7 +22,7 @@ print("read files")
 centroid, cluster = read_cluster()
 pcafeatures, pcaind = read_pca()
 user = osm_user(cluster)
-n_display_features = 8
+n_display_features = 10
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
